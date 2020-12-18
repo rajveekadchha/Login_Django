@@ -1,0 +1,188 @@
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Signup | Aavana Creations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+
+            <div id="navbarMenuHeroA" class="navbar-menu">
+                <div class="navbar-end">
+
+                    <a href="{% url 'login' %}" class="navbar-item">
+                        Login
+                    </a>
+                    <a href="{% url 'home' %}" class="navbar-item">
+                        Home
+                    </a>
+                    
+
+                </div>
+            </div>
+        </div>
+    </nav> 
+        
+<section class="hero is-primary is-fullheight" style="background-color: white; ">
+    <div class="hero-head">
+      <br>
+      <br>
+      <h1 style="text-align: center;color:#4A4A4A;" class="title">Welcome to Aavana Creations</h1> 
+    </div>
+    <div class="hero-body" style="background-image: url( {% static 'images/login.png' %} ); background-size:100%;"></div>>
+<div class="column is-4 is-offset-4">
+    <h3 class="title" style="color:#4A4A4A;">Sign up</h3>
+    <div class="box">
+      
+
+      <form action="signup" method="POST" >
+        {% csrf_token %}
+            <div class="field">
+                
+
+                  <div class="control">
+                  <label for="fname">First name:</label><br>
+                  <input class="input is-large" type="text" id="fname" name="fname" autofocus=""><br>
+                  <label for="lname">Last name:</label><br>
+                  <input  class="input is-large" type="text" id="lname" name="lname">
+
+                  <label for="email">Email address :</label><br>
+                  <input class="input is-large" pattern="[a-z0-9._%+-.]+\@[a-z0-9.-]+\.[a-z]{2,}" type="email" id="email" name="email"><br>
+                  <p id="emailid" class="invalid" style="float:left">Format:xxx.@abc.com</p><br>
+                  <label for="oname">Organisation name:</label><br>
+                  <input  class="input is-large" type="text" id="oname" name="oname">
+                  
+                    <label for="oname">Password:</label><br>
+                    <input  class="input is-large" type="password" class="form-control" placeholder="Password*" value="" id="pwd" name="pwd" pattern="(?=.*\d)(?=.*[a-z]).{8,}" title="Must contain at least one number and lowercase letter, and at least 8 or more characters" >
+                    
+                    
+                        <label for="oname">Confirm password:</label><br>
+                          
+                          <input class="input is-large" type="password" name="paddress" placeholder="Retype-Password*" id="paddress" size="30" required style="float: right;">
+                     <br>
+                     <div id="message" style="float: left;">
+                      <h7>Password must contain the following:</h7>
+                      <p id="letter" class="invalid">A lowercase letter</p>
+                      <p id="number" class="invalid">A number must be present</p>
+                      <p id="length" class="invalid">Minimum 8 characters</p>
+                  </div> <br>
+                  
+                    
+                </div>
+            </div>
+               
+            
+            <button class="button is-block is-info is-large is-fullwidth" type="submit" style="background-color: #606060;">Submit</button>
+        </form>
+    </div>
+</div>
+</div>
+<script>
+var myInput2 = document.getElementById("email");
+var email = document.getElementById("emailid");
+email.onfocus = function() {
+            document.getElementById("emailid").style.display = "block";
+        }
+        myInput2.onblur = function() {
+            document.getElementById("emailid").style.display = "none";
+        }
+
+        myInput2.onkeyup = function() {
+            var emailids = /[a-z0-9._%+-.]+\@[a-z0-9.-]+\.[a-z]{2,}$/g;
+            /*var emailids = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}+"@"+(?=.*[a-z])(?=.*[A-Z]).{5,}+"."+(?=.*[a-z])(?=.*[A-Z]).{2,}$/g;*/
+            if (myInput2.value.match(emailids)) {
+                email.classList.remove("invalid");
+                email.classList.add("valid");
+            } else {
+                email.classList.remove("valid");
+                email.classList.add("invalid");
+            }
+        }
+
+$(".toggle-password").click(function() {
+
+$(this).toggleClass("fa-eye fa-eye-slash");
+var input = $($(this).attr("toggle"));
+if (input.attr("type") == "password") {
+    input.attr("type", "text");
+} else {
+    input.attr("type", "password");
+}
+});
+
+// Script For Password and Re Type password must be same 
+var password = document.getElementById("pwd"),
+confirm_password = document.getElementById("paddress");
+
+function validatePassword() {
+if (password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Passwords Don't Match");
+} else {
+    confirm_password.setCustomValidity('');
+}
+}
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+
+var myInput = document.getElementById("pwd");
+var letter = document.getElementById("letter");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+
+
+        // When the user clicks on the password field, show the message box
+        myInput.onfocus = function() {
+            document.getElementById("message").style.display = "block";
+        }
+
+        // When the user clicks outside of the password field, hide the message box
+        myInput.onblur = function() {
+            document.getElementById("message").style.display = "none";
+        }
+
+        // When the user starts to type something inside the password field
+        myInput.onkeyup = function() {
+            // Validate lowercase letters
+            var lowerCaseLetters = /[a-z]/g;
+            if (myInput.value.match(lowerCaseLetters)) {
+                letter.classList.remove("invalid");
+                letter.classList.add("valid");
+            } else {
+                letter.classList.remove("valid");
+                letter.classList.add("invalid");
+            }
+
+            // Validate numbers
+            var numbers = /[0-9]/g;
+            if (myInput.value.match(numbers)) {
+                number.classList.remove("invalid");
+                number.classList.add("valid");
+            } else {
+                number.classList.remove("valid");
+                number.classList.add("invalid");
+            }
+
+            // Validate length
+            if (myInput.value.length >= 8) {
+                length.classList.remove("invalid");
+                length.classList.add("valid");
+            } else {
+                length.classList.remove("valid");
+                length.classList.add("invalid");
+            }
+        }
+    </script>
+</section>
+</body>
+
+</html>
+{% endblock %}
